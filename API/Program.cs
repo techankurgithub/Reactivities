@@ -17,6 +17,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>( (opt) => {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddCors( opt => {
+    opt.AddPolicy("CorsPolicy", policy => {
+        policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+    });
+}); // defining order in the services container not much matter, but it matter when we insert it into the middleware i.e. below
 
 var app = builder.Build();
 
@@ -32,6 +37,9 @@ if (app.Environment.IsDevelopment())
 
 // for time being we dont have httpsRedirection so we are commenting it out.
 // app.UseHttpsRedirection();
+
+// cors policy should be inserted before the authorization as it will go into pipeline
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 
