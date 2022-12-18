@@ -4,6 +4,7 @@ using MediatR;
 using Application.Activities;
 using Application.Core;
 using API.Extensions;
+using API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 // it will HOST the app on the "Kestral server"
@@ -25,6 +26,7 @@ var app = builder.Build();
 // this is often refered to as MIDDLEWARE
 // so any middleware we are going to use will go in here
 
+app.UseMiddleware<ExceptionMiddleware>();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

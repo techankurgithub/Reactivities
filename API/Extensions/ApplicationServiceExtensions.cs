@@ -28,7 +28,9 @@ namespace API.Extensions
                 });
             }); // defining order in the services container not much matter, but it matter when we insert it into the middleware i.e. below
             services.AddMediatR(typeof(List.Handler));
-            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            services.AddAutoMapper(typeof(MappingProfiles).Assembly);            
+            //services.AddFluentValidationAutoValidation();
+            //services.AddValidatorsFromAssemblyContaining<Create>();            
             return services;
         }
     }
