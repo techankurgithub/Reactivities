@@ -10,6 +10,7 @@ namespace API.Controllers
 {
     // now since we derived from base controller so it already has the [ApiController] attribute
     // we just need to define the end point
+    [AllowAnonymous]
     public class ActivitiesController : BaseApiController
     {        
         // private readonly IMediator _mediator;
