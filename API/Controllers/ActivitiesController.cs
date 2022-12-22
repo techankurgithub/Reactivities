@@ -9,8 +9,7 @@ using Persistence;
 namespace API.Controllers
 {
     // now since we derived from base controller so it already has the [ApiController] attribute
-    // we just need to define the end point
-    [AllowAnonymous]
+    // we just need to define the end point    
     public class ActivitiesController : BaseApiController
     {        
         // private readonly IMediator _mediator;
@@ -23,7 +22,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetActivities()
         {
             //return await _context.Activities.ToListAsync();
-            return HandleResult<List<Activity>>(await Mediator.Send(new List.Query()));
+            return HandleResult(await Mediator.Send(new List.Query()));
         }
         
         [HttpGet("{id}")] // url = api/activities/id
@@ -31,7 +30,7 @@ namespace API.Controllers
         {
             //return await _context.Activities.FindAsync(id);
             var result = await Mediator.Send(new Details.Query{Id = id });
-            return HandleResult<Activity>(result);
+            return HandleResult(result);
         }
 
         [HttpPost]
@@ -40,6 +39,7 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Create.Command {Activity = activity})) ;
         }
 
+        [Authorize(Policy = "IsActivityHost")]
         [HttpPut("{id}")]
         public async Task<IActionResult> ModifyActivity(Guid id,Activity activity)
         {
@@ -47,10 +47,17 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Modify.Command {Activity = activity}));
         }
 
+        [Authorize(Policy = "IsActivityHost")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActivity(Guid id)
         {
             return HandleResult(await Mediator.Send(new Delete.Command {Id = id}));
+        }
+
+        [HttpPost("{id}/attend")]
+        public async Task<IActionResult> UpdateAttendance(Guid id)
+        {
+            return HandleResult(await Mediator.Send(new UpdateAttendance.Command{ Id = id}));
         }
     }
 }
