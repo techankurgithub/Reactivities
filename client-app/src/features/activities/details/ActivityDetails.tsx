@@ -30,7 +30,7 @@ const ActivityDetails = () => {
         <ActivityDetailedChat></ActivityDetailedChat>
       </Grid.Column>
       <Grid.Column width='6'>
-        <ActivityDetailedSideBar></ActivityDetailedSideBar>
+        <ActivityDetailedSideBar activity={activity}></ActivityDetailedSideBar>
       </Grid.Column>
     </Grid>
   );
