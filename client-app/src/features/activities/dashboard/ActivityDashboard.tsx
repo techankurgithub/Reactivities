@@ -14,7 +14,7 @@ const ActivityDashboard = () => {
     if(activityRegistry.size === 0) loadActivities();   
   }, [loadActivities, activityRegistry.size]);
 
-  if(activitystore.loadingIntial){
+  if(activitystore.loadingInitial){
     return <LoadingComponent content="Loading..."></LoadingComponent>
   }
 

@@ -20,7 +20,7 @@ const ActivityForm = () => {
   const navigate = useNavigate();
   const { createActivity, updateActivity,
     loadActivity,    
-    loadingIntial,
+    loadingInitial,
   } = activitystore;
   const { id } = useParams();
   const validationSchema = Yup.object({
@@ -53,7 +53,7 @@ const ActivityForm = () => {
     }    
   };
 
-  if(loadingIntial) return <LoadingComponent content="Loading ..."></LoadingComponent>
+  if(loadingInitial) return <LoadingComponent content="Loading ..."></LoadingComponent>
 
   return (
     <Segment clearing>

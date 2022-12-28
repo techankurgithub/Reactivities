@@ -21,7 +21,7 @@ const ActivityListItem = ({ activity } : Props) => {
                     <Item.Content>
                         <Item.Header as={Link} to={`/activities/${activity.id}`}>{activity.title}                        
                         </Item.Header>
-                        <Item.Description>Hosted by {activity.host?.displayname}</Item.Description>
+                        <Item.Description>Hosted by {activity.host?.displayName}</Item.Description>
                         {activity.isHost && (
                             <Item.Description>
                                 <Label basic color="orange">

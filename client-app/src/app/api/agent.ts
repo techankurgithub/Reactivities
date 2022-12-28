@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 import { Activity, ActivityFormValues } from "../models/activity";
 import { User, UserFormValues } from "../models/user";
 import { router } from "../router/Routes";
@@ -36,7 +37,9 @@ axios.interceptors.response.use(async (response) => {
                     }
                 }
                 throw modalStateErrors.flat();
-            } 
+            } else {	
+                toast.error(data);	
+            }
             break;
         case 401:
             //toast.toast.error("Unauthorized");
@@ -69,7 +72,7 @@ const requests = {
 };
 
 const Activities = {
-    list: () => requests.get<Activity[]>('/activities'),
+    list: () => requests.get<Activity[]>(`/activities`),
     details: (id: string) => requests.get<Activity>(`/activities/${id}`),
     create: (activity: ActivityFormValues) => requests.post<void>(`/activities`, activity),
     update: (activity: ActivityFormValues) => requests.put<void>(`/activities/${activity.id}`, activity),
@@ -78,10 +81,10 @@ const Activities = {
 };
 
 const Account = {
-    current: () => requests.get<User>('/account') ,
-    login: (user: UserFormValues) => requests.post<User>('/account/login', user) ,
+    current: () => requests.get<User>('account'),
+    login: (user: UserFormValues) => requests.post<User>('/account/login', user),
     register: (user: UserFormValues) => requests.post<User>('/account/register', user)
-};
+}
 
 const agent = {
     Activities,

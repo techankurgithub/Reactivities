@@ -25,7 +25,7 @@ interface Props {
 
 const ActivityDetailedHeader = ({ activity }: Props) => {
   const {
-    activitystore: { updateAttendance, loading, cancelActivityToggle },
+    activitystore: { updateAttendeance, loading, cancelActivityToggle },
   } = useStore();
   return (
     <Segment.Group>
@@ -56,8 +56,8 @@ const ActivityDetailedHeader = ({ activity }: Props) => {
                 <p>
                   Hosted by{" "}
                   <strong>
-                    <Link to={`/profiles/${activity.host?.username}`}>
-                      {activity.host?.displayname}
+                    <Link to={`/profiles/${activity.host?.userName}`}>
+                      {activity.host?.displayName}
                     </Link>
                   </strong>
                 </p>
@@ -71,7 +71,7 @@ const ActivityDetailedHeader = ({ activity }: Props) => {
           <Fragment>
             <Button color={activity.isCancelled ? "green" : "red"} floated="left" basic 
             content={activity.isCancelled ? "Reactivities" : "Cancel Activity"}
-            onclick={cancelActivityToggle} loading={loading}></Button>
+            onClick={cancelActivityToggle} loading={loading}></Button>
             <Button
             disabled={activity.isCancelled}
               as={Link}
@@ -83,11 +83,11 @@ const ActivityDetailedHeader = ({ activity }: Props) => {
             </Button>
           </Fragment>
         ) : activity.isGoing ? (
-          <Button loading={loading} onClick={updateAttendance}>
+          <Button loading={loading} onClick={updateAttendeance}>
             Cancel attendance
           </Button>
         ) : (
-          <Button disabled={activity.isCancelled} loading={loading} onClick={updateAttendance} color="teal">
+          <Button disabled={activity.isCancelled} loading={loading} onClick={updateAttendeance} color="teal">
             Join Activity
           </Button>
         )}

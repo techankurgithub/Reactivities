@@ -11,7 +11,7 @@ import ActivityDetailedSideBar from "./ActivityDetailedSideBar";
 
 const ActivityDetails = () => {
   const { activitystore } = useStore();
-  const { selectedActivity: activity, loadActivity, loadingIntial} = activitystore;
+  const { selectedActivity: activity, loadActivity, loadingInitial} = activitystore;
   const { id } = useParams();
 
   useEffect( () => {
@@ -20,7 +20,7 @@ const ActivityDetails = () => {
     }
   }, [id, loadActivity]);
 
-  if(loadingIntial || !activity) return <LoadingComponent content="loading..."/>;
+  if(loadingInitial || !activity) return <LoadingComponent content="loading..."/>;  
 
   return (
     <Grid>
