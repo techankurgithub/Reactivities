@@ -30,17 +30,17 @@ export default class ProfileStore {
             })
         } catch (error) {
             console.log(error);
-        } finally {
-            this.loadingProfile = false;
-        }
-        
+            runInAction( () => {
+                this.loadingProfile = false;
+            })
+        }        
     }
 
     uploadPhoto =async (file: Blob) => {
         this.uploading = true;
         try {
-            const result = await agent.Profiles.uploadPhoto(file);
-            const photo = result.data;
+            const response = await agent.Profiles.uploadPhoto(file);
+            const photo = response.data;
             runInAction( () => {
                 if(this.profile){
                     this.profile.photos.push(photo);
@@ -50,15 +50,13 @@ export default class ProfileStore {
                     }
                 }
                 this.uploading = false;
-            })
-            
-            
+            })            
         } catch (error) {
             console.log(error);
-        } finally {
-            this.uploading = false;
-        }
-        
+            runInAction( () => {
+                this.uploading = false;
+            })
+        }      
     }
 
     setMainPhoto =async (photo: Photo) => {
@@ -68,8 +66,8 @@ export default class ProfileStore {
             store.userStore.setImage(photo.url);
             runInAction( () => {
                 if(this.profile && this.profile.photos){
-                    this.profile.photos.find(x => x.id === photo.id)!.isMain = true;
-                    this.profile.photos.find(p => p.isMain)!.isMain = false;
+                    this.profile.photos.find(a => a.isMain)!.isMain = false;
+                    this.profile.photos.find(a => a.id === photo.id)!.isMain = true;
                     this.profile.image = photo.url;
                     this.loading = false;
                 }

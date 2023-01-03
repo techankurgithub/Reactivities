@@ -1,14 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-using MediatR;
-using Application.Activities;
-using Application.Core;
 using API.Extensions;
 using API.Middleware;
 using Microsoft.AspNetCore.Identity;
 using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using API.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 // it will HOST the app on the "Kestral server"
@@ -52,6 +50,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<ChatHub>("/chat");
 
 // create the DB, access the DBContext service
 using var scope = app.Services.CreateScope();

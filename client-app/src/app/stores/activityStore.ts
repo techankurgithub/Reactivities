@@ -172,4 +172,8 @@ cancelActivityToggle = async () => {
   }
 }
 
+clearSelectedActivity = () => {
+  this.selectedActivity = undefined;
+}
+
 }

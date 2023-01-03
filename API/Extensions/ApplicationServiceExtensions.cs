@@ -27,16 +27,17 @@ namespace API.Extensions
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+                    policy.AllowCredentials().AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
                 });
             }); // defining order in the services container not much matter, but it matter when we insert it into the middleware i.e. below
             services.AddMediatR(typeof(List.Handler));
-            services.AddAutoMapper(typeof(MappingProfiles).Assembly);  
+            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddHttpContextAccessor();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
-            
+            services.AddSignalR();
+
             //services.AddFluentValidationAutoValidation();
             //services.AddValidatorsFromAssemblyContaining<Create>();            
             return services;
