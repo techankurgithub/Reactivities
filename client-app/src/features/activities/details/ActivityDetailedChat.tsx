@@ -1,10 +1,9 @@
 import { Formik, Form, Field, FieldProps } from "formik";
 import { observer } from "mobx-react-lite";
-import React, { Fragment, useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Segment, Header, Comment, Button, Loader } from "semantic-ui-react";
-import MyTextArea from "../../../app/common/form/MyTextArea";
-import { store, useStore } from "../../../app/stores/store";
+import { Segment, Header, Comment, Loader } from "semantic-ui-react";
+import { useStore } from "../../../app/stores/store";
 import * as Yup from "yup";
 import { formatDistanceToNow } from "date-fns";
 

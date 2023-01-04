@@ -172,6 +172,16 @@ cancelActivityToggle = async () => {
   }
 }
 
+updateAttendeeFollowing = (username: string) => {
+  this.activityRegistry.forEach( activity => 
+    activity.attendees.forEach( attendee => {
+      if( attendee.userName === username ){
+        attendee.following ? attendee.followersCount-- : attendee.followersCount++;
+        attendee.following = !attendee.following;
+      }
+    }));
+};
+
 clearSelectedActivity = () => {
   this.selectedActivity = undefined;
 }
