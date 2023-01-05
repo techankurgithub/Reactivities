@@ -9,19 +9,22 @@ import TestErrors from "../../features/errors/TestErrors";
 import ProfilePage from "../../features/profiles/ProfilePage";
 import LoginForm from "../../features/users/LoginForm";
 import App from "../App";
+import RequireAuth from "./RequireAuth";
 
 export const routes: RouteObject[] = [
     {
         path: '/',
         element: <App></App>,
-        children: [            
-            { path: 'activities', element: <ActivityDashboard />},
-            { path: 'createActivity', element: <ActivityForm />},
-            { path: 'profiles/:username', element: <ProfilePage />},
-            { path: 'activities/:id', element: <ActivityDetails key='create'/>},
-            { path: 'manage/:id', element: <ActivityForm key='manage'/>},            
-            { path: 'login', element: <LoginForm />},            
-            { path: 'errors', element: <TestErrors/>},            
+        children: [   
+            { element: <RequireAuth/>, children: [
+                { path: 'activities', element: <ActivityDashboard />},
+                { path: 'createActivity', element: <ActivityForm />},
+                { path: 'profiles/:username', element: <ProfilePage />},
+                { path: 'activities/:id', element: <ActivityDetails key='create'/>},
+                { path: 'manage/:id', element: <ActivityForm key='manage'/>},            
+                { path: 'login', element: <LoginForm />},            
+                { path: 'errors', element: <TestErrors/>},  
+            ] },          
             { path: 'not-found', element: <NotFound/>},            
             { path: 'server-error', element: <ServerError/>},            
             { path: '*', element: <Navigate replace to="/not-found"/>},            
