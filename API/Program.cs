@@ -35,10 +35,32 @@ var app = builder.Build();
 // so any middleware we are going to use will go in here
 
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseXContentTypeOptions(); // add the x-content type header
+app.UseReferrerPolicy(opt => opt.NoReferrer()); //enables the no-reffere policy and instruct the browser to not send reffere info
+app.UseXXssProtection(opt => opt.EnabledWithBlockMode()); //enable protection with block mode
+app.UseXfo(opt => opt.Deny()); // enable the deny directive
+app.UseCsp(opt => opt
+    .BlockAllMixedContent()
+    .StyleSources(o => o.Self().CustomSources("https://fonts.googleapis.com"))
+    .FontSources(o => o.Self().CustomSources("https://fonts.gstatic.com", "data:"))
+    .FormActions(o => o.Self())
+    .FrameAncestors(o => o.Self())
+    .ImageSources(o => o.Self().CustomSources("blob:", "http://res.cloudinary.com"))
+    .ScriptSources(o => o.Self())
+);
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+else
+{
+    app.Use(async (context, next) => 
+    {
+        context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
+        await next.Invoke();
+    });
 }
 
 // for time being we dont have httpsRedirection so we are commenting it out.
